@@ -1,0 +1,234 @@
+ST Edge AI Core v2.2.0-20266 2adc00962
+Created date          : 2026-09-23 20:01:39
+Parameters            : generate --target stm32f4 --name gesture_model -m C:/Users/DELL/Documents/tinyml-gesture-stm32/python/model.tflite --compression none --verbosity 1 --workspace C:/Users/DELL/AppData/Local/Temp/mxAI_workspace1156479831543002591862335491206616 --output C:/Users/DELL/.stm32cubemx/gesture_model_output
+
+Exec/report summary (generate)
+----------------------------------------------------------------------------------------------------------------------------
+model file         :   C:\Users\DELL\Documents\tinyml-gesture-stm32\python\model.tflite                                     
+type               :   tflite                                                                                               
+c_name             :   gesture_model                                                                                        
+compression        :   none                                                                                                 
+options            :   allocate-inputs, allocate-outputs                                                                    
+optimization       :   balanced                                                                                             
+target/series      :   stm32f4                                                                                              
+workspace dir      :   C:\Users\DELL\AppData\Local\Temp\mxAI_workspace1156479831543002591862335491206616                    
+output dir         :   C:\Users\DELL\.stm32cubemx\gesture_model_output                                                      
+model_fmt          :   ss/sa per channel                                                                                    
+model_name         :   model                                                                                                
+model_hash         :   0x297c579af01d228b9025e5739933fcd0                                                                   
+params #           :   206,401 items (202.50 KiB)                                                                           
+----------------------------------------------------------------------------------------------------------------------------
+input 1/1          :   'serving_default_input_layer0', int8(1x50x6), 300 Bytes, QLinear(0.007843138,-1,int8), activations   
+output 1/1         :   'nl_18', int8(1x1), 1 Bytes, QLinear(0.003906250,-128,int8), activations                             
+macc               :   782,530                                                                                              
+weights (ro)       :   207,364 B (202.50 KiB) (1 segment) / -618,240(-74.9%) vs float model                                 
+activations (rw)   :   12,032 B (11.75 KiB) (1 segment) *                                                                   
+ram (total)        :   12,032 B (11.75 KiB) = 12,032 + 0 + 0                                                                
+----------------------------------------------------------------------------------------------------------------------------
+(*) 'input'/'output' buffers are allocated in the activations buffer
+
+Model name - model
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+m_id   layer (type,original)                            oshape                 param/size             macc                     connected to   | c_size          c_macc              c_type                
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+0      serving_default_input_layer0 (Input, )           [b:1,h:50,c:6]                                                                        |                                     
+       reshape_0 (Reshape, EXPAND_DIMS)                 [b:1,h:1,w:50,c:6]                                     serving_default_input_layer0   |                                     
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+1      conv2d_1 (Conv2D, CONV_2D)                       [b:1,h:1,w:48,c:64]    1,216/1,408          55,360                        reshape_0   |                                     Conv2D_[0]            
+       nl_1_nl (Nonlinearity, CONV_2D)                  [b:1,h:1,w:48,c:64]                          3,072                         conv2d_1   |                 -3,072(-100.0%)     
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+2      reshape_2 (Reshape, RESHAPE)                     [b:1,h:48,c:64]                                                             nl_1_nl   |                                     
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+3      reshape_3 (Reshape, EXPAND_DIMS)                 [b:1,h:1,w:48,c:64]                                                       reshape_2   |                                     
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+4      pool_4 (Pool, MAX_POOL_2D)                       [b:1,h:1,w:24,c:64]                          3,072                        reshape_3   |                                     Pool_[1]              
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+5      reshape_5 (Reshape, RESHAPE)                     [b:1,h:24,c:64]                                                              pool_4   |                                     
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+6      reshape_6 (Reshape, EXPAND_DIMS)                 [b:1,h:1,w:24,c:64]                                                       reshape_5   |                                     
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+7      conv2d_7 (Conv2D, CONV_2D)                       [b:1,h:1,w:22,c:128]   24,704/25,088       540,800                        reshape_6   |                                     Conv2D_[2]            
+       nl_7_nl (Nonlinearity, CONV_2D)                  [b:1,h:1,w:22,c:128]                         2,816                         conv2d_7   |                 -2,816(-100.0%)     
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+8      reshape_8 (Reshape, RESHAPE)                     [b:1,h:22,c:128]                                                            nl_7_nl   |                                     
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+9      reshape_9 (Reshape, EXPAND_DIMS)                 [b:1,h:1,w:22,c:128]                                                      reshape_8   |                                     
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+10     pool_10 (Pool, MAX_POOL_2D)                      [b:1,h:1,w:11,c:128]                         2,816                        reshape_9   |                                     Pool_[3]              
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+11     reshape_11 (Reshape, RESHAPE)                    [b:1,h:11,c:128]                                                            pool_10   |                                     
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+15     reshape_15 (Reshape, RESHAPE)                    [b:1,c:1408]                                                                pool_10   |                                     
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+16     sequential_1_dense_1_MatMul (Placeholder, )      [b:128,c:1408]         180,224/180,224                                                | +512(+0.3%)     +180,352(+100.0%)   Dense_[4]             
+       sequential_1_dense.._1_BiasAdd (Placeholder, )   [b:128]                128/512                                                        | -512(-100.0%)                       
+       gemm_16 (Gemm, FULLY_CONNECTED)                  [b:1,c:128]                                180,352                       reshape_15   |                 -180,352(-100.0%)   
+                                                                                                                sequential_1_dense_1_MatMul   | 
+                                                                                                             sequential_1_dense.._1_BiasAdd   | 
+       nl_16_nl (Nonlinearity, FULLY_CONNECTED)         [b:1,c:128]                                    128                          gemm_16   |                 -128(-100.0%)       
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+17     sequential_1_dense_1_2_MatMul (Placeholder, )    [b:1,c:128]            128/128                                                        | +4(+3.1%)       +129(+100.0%)       Dense_[5]             
+       sequential_1_dense_1_2_Add (Placeholder, )       [b:1]                  1/4                                                            | -4(-100.0%)                         
+       gemm_17 (Gemm, FULLY_CONNECTED)                  [b:1,c:1]                                      129                         nl_16_nl   |                 -129(-100.0%)       
+                                                                                                              sequential_1_dense_1_2_MatMul   | 
+                                                                                                                 sequential_1_dense_1_2_Add   | 
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+18     nl_18 (Nonlinearity, LOGISTIC)                   [b:1,c:1]                                       10                          gemm_17   |                 -9(-90.0%)          Nonlinearity_[o][6]   
+------ ------------------------------------------------ ---------------------- ----------------- --------- -------------------------------- --- --------------- ------------------- --------------------- 
+model/c-model: macc=788,555/782,530 -6,025(-0.8%) weights=207,364/207,364  activations=--/12,032 io=--/0
+
+
+
+Generated C-graph summary
+------------------------------------------------------------------------------------------------------------------------
+model name            : model
+c-name                : gesture_model
+c-node #              : 7
+c-array #             : 20
+activations size      : 12032 (1 segment)
+weights size          : 207364 (1 segment)
+macc                  : 782530
+inputs                : ['serving_default_input_layer0_output']
+outputs               : ['nl_18_output']
+
+C-Arrays (20)
+------ ------------------------------------- --------------- ------------------------- ----------- --------- 
+c_id   name (*_array)                        item/size       domain/mem-pool           c-type      comment   
+------ ------------------------------------- --------------- ------------------------- ----------- --------- 
+0      conv2d_1_bias                         64/256          weights/weights           const s32             
+1      conv2d_1_output                       3072/3072       activations/**default**   s8                    
+2      conv2d_1_scratch0                     3272/3272       activations/**default**   s8                    
+3      conv2d_1_weights                      1152/1152       weights/weights           const s8              
+4      conv2d_7_bias                         128/512         weights/weights           const s32             
+5      conv2d_7_output                       2816/2816       activations/**default**   s8                    
+6      conv2d_7_scratch0                     7680/7680       activations/**default**   s8                    
+7      conv2d_7_weights                      24576/24576     weights/weights           const s8              
+8      gemm_16_bias                          128/512         weights/weights           const s32             
+9      gemm_16_output                        128/128         activations/**default**   s8                    
+10     gemm_16_scratch0                      2048/4096       activations/**default**   s16                   
+11     gemm_16_weights                       180224/180224   weights/weights           const s8              
+12     gemm_17_bias                          1/4             weights/weights           const s32             
+13     gemm_17_output                        1/1             activations/**default**   s8                    
+14     gemm_17_scratch0                      128/256         activations/**default**   s16                   
+15     gemm_17_weights                       128/128         weights/weights           const s8              
+16     nl_18_output                          1/1             activations/**default**   s8          /output   
+17     pool_10_output                        1408/1408       activations/**default**   s8                    
+18     pool_4_output                         1536/1536       activations/**default**   s8                    
+19     serving_default_input_layer0_output   300/300         activations/**default**   s8          /input    
+------ ------------------------------------- --------------- ------------------------- ----------- --------- 
+
+C-Layers (7)
+------ ---------------- ---- --------------- -------- -------- ---------------------------------------- ----------------------- 
+c_id   name (*_layer)   id   layer_type      macc     rom      tensors                                  shape (array id)        
+------ ---------------- ---- --------------- -------- -------- ---------------------------------------- ----------------------- 
+0      conv2d_1         1    Conv2D          55360    1408     I: serving_default_input_layer0_output   int8(1x50x6) (19)       
+                                                               S: conv2d_1_scratch0                                             
+                                                               W: conv2d_1_weights                      int8(64x1x3x6) (3)      
+                                                               W: conv2d_1_bias                         int32(64) (0)           
+                                                               O: conv2d_1_output                       int8(1x1x48x64) (1)     
+------ ---------------- ---- --------------- -------- -------- ---------------------------------------- ----------------------- 
+1      pool_4           4    Pool            3072     0        I: conv2d_1_output                       int8(1x1x48x64) (1)     
+                                                               O: pool_4_output                         int8(1x1x24x64) (18)    
+------ ---------------- ---- --------------- -------- -------- ---------------------------------------- ----------------------- 
+2      conv2d_7         7    Conv2D          540800   25088    I: pool_4_output                         int8(1x1x24x64) (18)    
+                                                               S: conv2d_7_scratch0                                             
+                                                               W: conv2d_7_weights                      int8(128x1x3x64) (7)    
+                                                               W: conv2d_7_bias                         int32(128) (4)          
+                                                               O: conv2d_7_output                       int8(1x1x22x128) (5)    
+------ ---------------- ---- --------------- -------- -------- ---------------------------------------- ----------------------- 
+3      pool_10          10   Pool            2816     0        I: conv2d_7_output                       int8(1x1x22x128) (5)    
+                                                               O: pool_10_output                        int8(1x1x11x128) (17)   
+------ ---------------- ---- --------------- -------- -------- ---------------------------------------- ----------------------- 
+4      gemm_16          16   Dense           180352   180736   I: pool_10_output                        int8(1x1x11x128) (17)   
+                                                               S: gemm_16_scratch0                                              
+                                                               W: gemm_16_weights                       int8(128x1408) (11)     
+                                                               W: gemm_16_bias                          int32(128) (8)          
+                                                               O: gemm_16_output                        int8(1x128) (9)         
+------ ---------------- ---- --------------- -------- -------- ---------------------------------------- ----------------------- 
+5      gemm_17          17   Dense           129      132      I: gemm_16_output                        int8(1x128) (9)         
+                                                               S: gemm_17_scratch0                                              
+                                                               W: gemm_17_weights                       int8(1x128) (15)        
+                                                               W: gemm_17_bias                          int32(1) (12)           
+                                                               O: gemm_17_output                        int8(1x1) (13)          
+------ ---------------- ---- --------------- -------- -------- ---------------------------------------- ----------------------- 
+6      nl_18            18   Nonlinearity    1        0        I: gemm_17_output                        int8(1x1) (13)          
+                                                               O: nl_18_output                          int8(1x1) (16)          
+------ ---------------- ---- --------------- -------- -------- ---------------------------------------- ----------------------- 
+
+
+
+Number of operations per c-layer
+------- ------ ---------------------- --------- ------------ 
+c_id    m_id   name (type)                  #op         type 
+------- ------ ---------------------- --------- ------------ 
+0       1      conv2d_1 (Conv2D)         55,360   smul_s8_s8 
+1       4      pool_4 (Pool)              3,072   smul_s8_s8 
+2       7      conv2d_7 (Conv2D)        540,800   smul_s8_s8 
+3       10     pool_10 (Pool)             2,816   smul_s8_s8 
+4       16     gemm_16 (Dense)          180,352   smul_s8_s8 
+5       17     gemm_17 (Dense)              129   smul_s8_s8 
+6       18     nl_18 (Nonlinearity)           1     op_s8_s8 
+------- ------ ---------------------- --------- ------------ 
+total                                   782,530 
+
+Number of operation types
+---------------- --------- ----------- 
+operation type           #           % 
+---------------- --------- ----------- 
+smul_s8_s8         782,529      100.0% 
+op_s8_s8                 1        0.0% 
+
+Complexity report (model)
+------ ------------------------------- ------------------------- ------------------------- ------ 
+m_id   name                            c_macc                    c_rom                     c_id   
+------ ------------------------------- ------------------------- ------------------------- ------ 
+1      conv2d_1                        ||                 7.1%   |                  0.7%   [0]    
+4      pool_4                          |                  0.4%   |                  0.0%   [1]    
+7      conv2d_7                        ||||||||||||||||  69.1%   |||               12.1%   [2]    
+10     pool_10                         |                  0.4%   |                  0.0%   [3]    
+16     sequential_1_dense_1_MatMul     ||||||            23.0%   ||||||||||||||||  87.2%   [4]    
+17     sequential_1_dense_1_2_MatMul   |                  0.0%   |                  0.1%   [5]    
+18     nl_18                           |                  0.0%   |                  0.0%   [6]    
+------ ------------------------------- ------------------------- ------------------------- ------ 
+macc=782,530 weights=207,364 act=12,032 ram_io=0
+ 
+ Requested memory size by section - "stm32f4" target
+ ------------------------------ -------- --------- ------- -------- 
+ module                             text    rodata    data      bss 
+ ------------------------------ -------- --------- ------- -------- 
+ NetworkRuntime1020_CM4_GCC.a     22,692         0       0        0 
+ gesture_model.o                     668     2,165   2,644      200 
+ gesture_model_data.o                 48        16      88        0 
+ lib (toolchain)*                  1,652         0       0        0 
+ ------------------------------ -------- --------- ------- -------- 
+ RT total**                       25,060     2,181   2,732      200 
+ ------------------------------ -------- --------- ------- -------- 
+ weights                               0   207,368       0        0 
+ activations                           0         0       0   12,032 
+ io                                    0         0       0        0 
+ ------------------------------ -------- --------- ------- -------- 
+ TOTAL                            25,060   209,549   2,732   12,232 
+ ------------------------------ -------- --------- ------- -------- 
+ *  toolchain objects (libm/libgcc*)
+ ** RT AI runtime objects (kernels+infrastructure)
+  
+  Summary - "stm32f4" target
+  ---------------------------------------------------
+               FLASH (ro)      %*   RAM (rw)       % 
+  ---------------------------------------------------
+  RT total         29,973   12.6%      2,932   19.6% 
+  ---------------------------------------------------
+  TOTAL           237,341             14,964         
+  ---------------------------------------------------
+  *  rt/total
+
+
+Generated files (7)
+----------------------------------------------------------------------------- 
+C:\Users\DELL\.stm32cubemx\gesture_model_output\gesture_model_data_params.h   
+C:\Users\DELL\.stm32cubemx\gesture_model_output\gesture_model_data_params.c   
+C:\Users\DELL\.stm32cubemx\gesture_model_output\gesture_model_data.h          
+C:\Users\DELL\.stm32cubemx\gesture_model_output\gesture_model_data.c          
+C:\Users\DELL\.stm32cubemx\gesture_model_output\gesture_model_config.h        
+C:\Users\DELL\.stm32cubemx\gesture_model_output\gesture_model.h               
+C:\Users\DELL\.stm32cubemx\gesture_model_output\gesture_model.c               

@@ -1,0 +1,42 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+.ipynb_checkpoints/
+venv/
+.venv/
+env/
+ENV/
+
+# Datasets / model artifacts (regenerate via training scripts)
+python/data/
+*.npy
+*.h5
+*.tflite
+
+# ---- STM32CubeIDE / STM32CubeMX ----
+stm32/**/Debug/
+stm32/**/Release/
+stm32/**/.metadata/
+stm32/**/.settings/
+*.launch
+*.o
+*.d
+*.elf
+*.map
+*.bin
+*.hex
+*.list
+*.su
+
+# STM32CubeIDE workspace metadata
+.metadata/
+
+# ---- OS / Editor ----
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
